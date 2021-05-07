@@ -38,11 +38,7 @@
                 {
                     $("#occupation").change(function ()
                     {
-                        alert("DropDown selected value is changed ");
-                        alert($("#occupation :selected").val())
-                        alert($("#age").val())
-                        alert($("#suminsured").val())
-
+                      
                         $.ajax({
                             type: "POST",
                             dataType: "text",
