@@ -30,12 +30,9 @@ $(document).ready(function () {
 		else {
 			resetResultsAndOccupation();
         }
-    });
+	});
 });
 
-window.onload = function () {
-
-}
 
 function nameValidate() {
 
@@ -69,7 +66,8 @@ function dateOfBirthValidate() {
 		document.getElementById("dateOfBirthInputStatus").style.display = "none";
 		dateOfBirthInput.parentNode.className = "form-group has-success has-feedback";
 		document.getElementById("dateOfBirthIcon").className = "glyphicon glyphicon-ok form-control-feedback";
-		return true;
+		calculateAge();
+		return true;		
 	}
 }
 
@@ -118,7 +116,6 @@ function checkForm() {
 	if (!insuranceAmountValidate()) valid = false;
 	if (!ageValidate()) valid = false;
 
-	//alert(valid); 
 	return valid;
 }
 
@@ -127,3 +124,15 @@ function resetResultsAndOccupation() {
 	$('#occupation').prop('selectedIndex', 0);
 }
 
+
+function calculateAge() {
+
+	var dateofBirth = document.getElementById("dateofbirth").value;
+	var birthDate = new Date(dateofBirth);
+
+	var difference = Date.now() - birthDate.getTime();
+	var ageDate = new Date(difference);
+	var calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+
+	document.getElementById("age").value = calculatedAge;
+}

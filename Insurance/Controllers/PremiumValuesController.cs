@@ -47,6 +47,7 @@ namespace Insurance.Controllers
         public decimal CalculatePremium(decimal amount, double factor, int age)
         {
             decimal premiumAmount = (amount * Convert.ToDecimal(factor) * age) / (1000 * 12);
+            premiumAmount = Math.Round(premiumAmount, 2);
             return premiumAmount;
         }
     }
