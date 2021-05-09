@@ -3,71 +3,79 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 <script src="~/js/jquery-3.2.1.min.js"></script>
+
+<input type="hidden" data-url="@Url.Action("GetInsurancePremium", "PremiumValues")" id="formUrl">
+
 <html>
-<head></head>
+<head>
+    <style>
+        .errorHeader {
+            font-weight: lighter;                
+            color: red;
+            display: none;
+        }
+        .dropdown-menu {
+            width: 200px;
+        }
+        .result {
+            font-weight: bold;
+        }
+
+        .h3 {
+            margin: 1em 0 0.5em 0;
+            font-weight: 600;
+            font-family: 'Titillium Web', sans-serif;
+            position: relative;
+            font-size: 24px;
+            line-height: 30px;
+            padding: 15px 15px 15px 15%;
+            color: #355681;
+            border-radius: 0 10px 0 10px;            
+        }
+    </style>
+</head>
 <body>
-    <h2>Monthly Insurance Premium</h2>
-    <div class="row">
+    <h3 class="h3">Monthly Insurance Premium</h3>
+    <div class="row col-sm-12">
         @using (Html.BeginForm("Index", "Premium", FormMethod.Post))
         {
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" name="name" value="@Model.Name" />
+            <div class="form-group has-feedback">
+                <label for="name">Name * </label>
+                <input type="text" class="form-control" id="name" name="name" value="@Model.Name" aria-describedby="nameInputStatus" onblur="nameValidate()" />
+                <span id="nameIcon"></span>
+                <span id="nameInputStatus" class="errorHeader">Name field is required!</span>
             </div>
-            <div class="form-group">
-                <label for="age">Age</label>
-                <input type="number" class="form-control" id="age" name="age" value="@Model.Age" />
+            <div class="form-group has-feedback">
+                <label for="dateofbirth">Date of Birth * </label>
+                <input type="date" class="form-control" id="dateofbirth" name="dateofbirth" value="@Model.DateOfBirth" aria-describedby="dateOfBirthInputStatus" onblur="dateOfBirthValidate()" />
+                <span id="dateOfBirthIcon"></span>
+                <span id="dateOfBirthInputStatus" class="errorHeader">Date of Birth field is required!</span>
             </div>
-            <div class="form-group">
-                <label for="dateofbirth">Date of Birth</label>
-                <input type="date" class="form-control" id="dateofbirth" name="dateofbirth" value="@Model.DateOfBirth" />
+            <div class="form-group has-feedback">
+                <label for="age">Age * </label>
+                <input type="number" class="form-control" id="age" name="age" value="@Model.Age"  aria-describedby="ageInputStatus" onblur="ageValidate()" />
+                <span id="ageIcon"></span>
+                <span id="ageInputStatus" class="errorHeader">Age field is required!</span>
             </div>
-            <div class="form-group">
-                <label for="InsuranceAmount">Insurance Amount</label>
-                <input type="text" class="form-control" id="suminsured" name="suminsured" value="@Model.DeathSumInsured" />
+            <div class="form-group has-feedback">
+                <label for="suminsured">Insurance Amount * </label>
+                <input type="text" class="form-control" id="suminsured" name="suminsured" value="@Model.DeathSumInsured" aria-describedby="suminsuredInputStatus" onblur="insuranceAmountValidate()"/>
+                <span id="suminsuredIcon"></span>
+                <span id="suminsuredInputStatus" class="errorHeader">Insurance Amount field is required!</span>
             </div>
-            <div class="form-group">
-                <label for="occupation">Occupation</label>
-                @Html.DropDownList("occupation", ViewData["list"] as List<SelectListItem>)
-  
+            <div class="form-group has-feedback">
+                <label for="occupation">Occupation * </label>
+                <div>                   
+                    @Html.DropDownList("occupation", (SelectList)ViewBag.myList, "Please select", new { @class = "form-control" })
+                </div>              
             </div>
-            <span id="monthlypremium"></span>
-            <script type="text/javascript">
+            <div>
+                <span id="monthlypremium" class="result"></span>
+            </div>           
 
-                $(document).ready(function ()
-                {
-                    $("#occupation").change(function ()
-                    {
-                      
-                        $.ajax({
-                            type: "POST",
-                            dataType: "text",
-                            url: "@(Url.Action("GetInsurancePremium", "PremiumValues"))",
-                            data: {                    
-                                
-                                "suminsured": $("#suminsured").val(),
-                                "age": $("#age").val(),
-                                "occupation": $("#occupation :selected").val()
-                            },
-
-                            success: function (response) {
-
-                            document.getElementById("monthlypremium").textContent = "Monthly Premium: " + response;
-                        },
-
-                        error: function (xhr)
-                        {
-
-                            alert("Something went wrong, please try again");
-                        }
-
-                        });
-                    });　
-                });
-
-            </script>            
+            <script src="./js/Premium.js"></script>
         }
 
     </div>
-  </body>
+</body>
 </html>

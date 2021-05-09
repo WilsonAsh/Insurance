@@ -13,7 +13,6 @@ namespace Insurance.Controllers
     [ApiController]
     public class PremiumValuesController : ControllerBase
     {
-        //[ActionName("InsurancePremium")]
         [HttpPost]
         public decimal GetInsurancePremium([FromForm] decimal SumInsured, [FromForm] int Age, [FromForm] string Occupation)
         {

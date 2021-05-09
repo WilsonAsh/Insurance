@@ -20,7 +20,7 @@ namespace Insurance.Controllers
                 new SelectListItem{ Text="Author", Value = "Author" },
                 new SelectListItem{ Text="Farmer", Value = "Farmer" },
                 new SelectListItem{ Text="Mechanic", Value = "Mechanic" },
-                new SelectListItem{ Text="Florist", Value = "Florist", Selected = true },
+                new SelectListItem{ Text="Florist", Value = "Florist"},
             };
 
             ViewData["Occupation"] = list;
